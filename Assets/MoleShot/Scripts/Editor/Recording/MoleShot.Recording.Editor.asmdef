@@ -1,0 +1,26 @@
+{
+    "name": "MoleShot.Recording.Editor",
+    "rootNamespace": "MoleShot.EditorTools",
+    "references": [
+        "MoleShot",
+        "Unity.Recorder",
+        "Unity.Recorder.Editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.recorder",
+            "expression": "4.0.0",
+            "define": "MOLESHOT_RECORDER"
+        }
+    ],
+    "noEngineReferences": false
+}

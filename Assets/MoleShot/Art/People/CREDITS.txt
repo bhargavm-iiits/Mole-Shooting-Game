@@ -1,0 +1,20 @@
+Crowd people - Microsoft Rocketbox Avatar Library
+==================================================
+Source repository : https://github.com/microsoft/Microsoft-Rocketbox  (master, commit 0943055db6ec570bcef9f2c8b41c9e5467c808f9)
+Author            : Microsoft (Rocketbox original avatar creation team; Microsoft Research - Mar Gonzalez-Franco et al.)
+Licence           : MIT License, Copyright (c) 2020 Microsoft  (full text: Rocketbox_LICENSE.txt in this folder;
+                    https://github.com/microsoft/Microsoft-Rocketbox/blob/master/LICENSE.md). The library was re-licensed
+                    from research-only to MIT in November 2020 (see the repository README).
+Attribution text  : "Crowd characters: Microsoft Rocketbox Avatar Library (c) 2020 Microsoft, MIT License -
+                    https://github.com/microsoft/Microsoft-Rocketbox"
+
+Models used (all from Assets/Avatars/Adults/<name>/Export/<name>.fbx + Textures/*_color.tga):
+  Female_Adult_01  https://github.com/microsoft/Microsoft-Rocketbox/tree/master/Assets/Avatars/Adults/Female_Adult_01
+  Female_Adult_03  https://github.com/microsoft/Microsoft-Rocketbox/tree/master/Assets/Avatars/Adults/Female_Adult_03
+  Male_Adult_01    https://github.com/microsoft/Microsoft-Rocketbox/tree/master/Assets/Avatars/Adults/Male_Adult_01
+  Male_Adult_08    https://github.com/microsoft/Microsoft-Rocketbox/tree/master/Assets/Avatars/Adults/Male_Adult_08
+  Male_Adult_12    https://github.com/microsoft/Microsoft-Rocketbox/tree/master/Assets/Avatars/Adults/Male_Adult_12
+
+Modifications (Blender 5.2, headless): arms posed from A-pose to "idle" (arms down) and "cheer" (arms up) and baked;
+armature removed; body/head/opacity textures combined into one 1024x1024 atlas (*_atlas.png); decimated from
+~7.4k to 2,500 triangles; exported as FBX. Normal/specular maps not used.
