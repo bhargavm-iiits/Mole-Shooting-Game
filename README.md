@@ -1,142 +1,116 @@
-# ⚽🐭 Mole Shot — Football Mole Shooting Game
+# Mole Shot — Football Mole Shooting Game
 
-<div align="center">
+A 3D arcade mobile game built with Unity 6 and the Universal Render Pipeline. The player swipes to launch a football at moles popping up from burrows on a football field. The objective is to reach a hit target before the timer runs out, with a combo multiplier system that rewards consecutive hits.
 
-![Unity](https://img.shields.io/badge/Unity-6000.5.5f1-black?style=for-the-badge&logo=unity)
-![Platform](https://img.shields.io/badge/Platform-Android-green?style=for-the-badge&logo=android)
-![Version](https://img.shields.io/badge/Version-0.1.0-blue?style=for-the-badge)
-![Min SDK](https://img.shields.io/badge/Min%20SDK-Android%2026-orange?style=for-the-badge)
-![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)
-
-**A fast-paced mobile football shooting game where you swipe to launch a ball at moles popping up from holes — score combos, beat the clock, and clear every level!**
-
-[📱 Download APK](#-download--install) · [🎮 Gameplay](#-gameplay) · [🏗️ Architecture](#️-architecture) · [🔧 Setup](#-getting-started)
-
-</div>
+**Platform:** Android (API 26+)  
+**Engine:** Unity 6000.5.5f1  
+**Version:** 0.1.0  
+**Author:** Bhargav M — bhargav.m23@iiits.in  
+**Institution:** IIIT Sri City
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
-- [About the Game](#-about-the-game)
-- [Gameplay](#-gameplay)
-- [Features](#-features)
-- [Tech Stack](#-tech-stack)
-- [Project Structure](#-project-structure)
-- [Architecture](#️-architecture)
-- [Game Pipeline](#-game-pipeline)
-- [Build Pipeline](#-build-pipeline)
-- [Getting Started](#-getting-started)
-- [Download & Install](#-download--install)
-- [Scripts Reference](#-scripts-reference)
-- [Contributing](#-contributing)
-
----
-
-## 🎮 About the Game
-
-**Mole Shot** is a 3D mobile arcade game built with **Unity 6** and the **Universal Render Pipeline (URP)**. Players swipe on the screen to aim and shoot a football at moles that pop up from burrow holes on a football field. The challenge is to hit enough moles to reach the score goal before the timer runs out — all while chaining combos for bonus multipliers.
-
-> Developed as an assignment project for **IIIT Sri City** by **ImmersiWorks Prototype**.
+1. [Requirements](#requirements)
+2. [Getting Started](#getting-started)
+3. [Project Structure](#project-structure)
+4. [Game Design](#game-design)
+5. [Architecture Overview](#architecture-overview)
+6. [Game Loop Pipeline](#game-loop-pipeline)
+7. [Build Pipeline](#build-pipeline)
+8. [Configuration Reference](#configuration-reference)
+9. [Scripts Reference](#scripts-reference)
+10. [Running Tests](#running-tests)
+11. [Installing the APK](#installing-the-apk)
 
 ---
 
-## 🕹️ Gameplay
+## Requirements
 
-| Phase | Description |
-|-------|-------------|
-| **Menu** | Select a level from the level select screen |
-| **Intro** | Level banner displays (can be skipped in debug mode) |
-| **Playing** | Swipe to aim → release to shoot → hit moles for points |
-| **Combo** | Chain hits without missing to multiply your score |
-| **Win / Lose** | Reach goal before timer → Win (★★★); Time's up → Retry |
-
-### Controls
-- **Swipe** — drag to aim the trajectory arc, release to fire
-- **Tap** — interact with UI buttons
-- Touch-based input using Unity's new **Input System**
+- Unity Hub with **Unity 6000.5.5f1**
+- Android Build Support module (via Unity Hub Add Modules)
+- Android SDK, NDK and JDK — bundled with Unity is sufficient
+- Git
 
 ---
 
-## ✨ Features
+## Getting Started
 
-- 🎯 **Physics-based ball trajectory** with real-time preview arc
-- 🐭 **Dynamic mole spawning** — difficulty scales per level config
-- 🔥 **Combo multiplier system** — chain hits for 2×, 3×, 4× bonuses
-- ⏱️ **Countdown timer** per round
-- ⭐ **Star rating** (0–3 stars) based on performance
-- 🔊 **Procedural crowd audio** — cheers react to your performance
-- 📱 **Safe area & portrait fitting** for all Android screen sizes
-- 🤖 **AutoPlayer** — AI-driven bot for playtesting shot accuracy
-- 🎬 **Built-in recorder** for capturing gameplay footage (Editor only)
-- 🎨 **URP rendering** with separate Mobile & PC render pipelines
+```bash
+git clone https://github.com/bhargavm-iiits/Mole-Shooting-Game.git
+```
 
----
+Open Unity Hub → **Add project from disk** → select the cloned folder. Unity will import all packages automatically on first open.
 
-## 🛠️ Tech Stack
+To run in the editor, open `Assets/Scenes/SampleScene.unity` and press Play. Mouse drag simulates swipe input.
 
-| Technology | Version / Details |
-|------------|-------------------|
-| **Unity** | 6000.5.5f1 (Unity 6) |
-| **Render Pipeline** | Universal Render Pipeline (URP) |
-| **Input System** | Unity New Input System |
-| **Platform** | Android (Min SDK 26 / Android 8.0+) |
-| **Language** | C# (.NET) |
-| **Physics** | Unity 3D Rigidbody Physics |
-| **Build System** | Gradle (IL2CPP scripting backend) |
-| **IDE** | Visual Studio / Rider |
+To build for Android:
+
+1. File → Build Settings → select **Android** → Switch Platform
+2. Player Settings → Other Settings → Scripting Backend: **IL2CPP**
+3. Build → select an output directory
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 Football_mole/
-├── 📁 Assets/
-│   ├── 📁 Game Assets/           # 3D models & textures
-│   │   ├── football/             # Football FBX + textures
-│   │   ├── football-field/       # Field model (GLB) + textures
-│   │   ├── mole/                 # Mole model (GLB) + textures
-│   │   └── traffic-cone-low-poly/# Traffic cone model
-│   │
-│   ├── 📁 MoleShot/              # Main game module
-│   │   ├── Art/                  # Generated sprites & materials
-│   │   ├── Config/               # Level & game config assets
-│   │   ├── Prefabs/              # Ball, Hole, Mole, HUD prefabs
-│   │   ├── Scripts/              # All C# game scripts
-│   │   │   ├── BallController.cs
-│   │   │   ├── RoundManager.cs
-│   │   │   ├── ShotController.cs
-│   │   │   ├── ShotSolver.cs
-│   │   │   ├── HoleController.cs
-│   │   │   ├── MoleHitbox.cs
-│   │   │   ├── HudController.cs
-│   │   │   ├── FeedbackController.cs
-│   │   │   ├── AudioFeedback.cs
-│   │   │   ├── TrajectoryPreview.cs
-│   │   │   ├── SwipeInput.cs
-│   │   │   ├── LevelDefinition.cs
-│   │   │   └── Editor/           # Editor-only tools
-│   │   └── Tests/                # Unit tests (ShotSolver)
-│   │
-│   ├── 📁 Scenes/
-│   │   └── SampleScene.unity     # Main game scene
-│   ├── 📁 Settings/              # URP render pipeline assets
-│   └── 📁 TutorialInfo/          # Tutorial icons & scripts
-│
-├── 📁 APK/
-│   └── MoleShooting.apk          # ✅ Release build APK
-│
-├── 📁 Packages/                  # Unity package manifest
-├── 📁 ProjectSettings/           # Unity project configuration
-└── README.md
+├── Assets/
+│   ├── Game Assets/
+│   │   ├── football/            FBX model + diffuse/normal textures
+│   │   ├── football-field/      GLB field model + ground textures
+│   │   ├── mole/                GLB mole model + albedo texture
+│   │   └── traffic-cone-low-poly/
+│   ├── MoleShot/
+│   │   ├── Art/                 Generated sprites, materials, mesh assets
+│   │   ├── Config/              MoleShotConfig and LevelDefinition assets
+│   │   ├── Prefabs/             Ball, Hole, Mole, HUD, Crowd prefabs
+│   │   ├── Scripts/             All runtime C# scripts (see Scripts Reference)
+│   │   │   └── Editor/          Editor-only tools: build, playtest, recorder
+│   │   └── Tests/Editor/        NUnit tests for ShotSolver
+│   ├── Scenes/
+│   │   └── SampleScene.unity
+│   └── Settings/                URP render pipeline assets (Mobile + PC)
+├── APK/
+│   └── MoleShooting.apk         Pre-built Android release
+├── Packages/
+│   └── manifest.json
+└── ProjectSettings/
 ```
 
 ---
 
-## 🏗️ Architecture
+## Game Design
 
-The game follows a **component-based event-driven architecture** where `RoundManager` acts as the central state machine, broadcasting events to all listener systems.
+### Levels
+
+There are three levels, each with a fixed duration and a hit target. Difficulty scales progressively within a level using an `AnimationCurve`.
+
+| Level | Duration | Target Hits | Spawn Interval (start → end) | Fast Mole Chance |
+|-------|----------|-------------|-------------------------------|------------------|
+| 1     | 60 s     | 10          | 1.5 s → 1.1 s                 | 15% → 25%        |
+| 2     | 90 s     | 15          | 1.3 s → 0.9 s                 | 20% → 30%        |
+| 3     | 120 s    | 20          | 1.1 s → 0.75 s                | 30% → 40%        |
+
+### Scoring
+
+- Normal mole hit: **1 point**
+- Fast mole hit: **2 points**
+- Combo multiplier: every 3 consecutive hits increases the multiplier by 1, up to **3×**
+- Missing resets the combo to 0
+
+### Result
+
+- Reaching the target hit count before the timer ends → **Win** (1–3 stars based on performance)
+- Timer expires before the target is reached → **Time's up** (retry option)
+
+---
+
+## Architecture Overview
+
+The game uses a component-based, event-driven design. `RoundManager` is the authoritative state machine. All other systems listen to its events rather than polling state directly.
 
 ```mermaid
 classDiagram
@@ -146,8 +120,8 @@ classDiagram
         +int ComboHits
         +float TimeLeft
         +event RoundStarted
-        +event MoleHit
         +event RoundEnded
+        +event MoleHit
         +event LevelEnded
         +event MenuShown
     }
@@ -162,7 +136,6 @@ classDiagram
 
     class ShotSolver {
         +SolveTrajectory()
-        +CalculateAngle()
     }
 
     class BallController {
@@ -185,265 +158,230 @@ classDiagram
 
     class MoleHitbox {
         +OnHit()
-        +RegisterHole()
-    }
-
-    class FeedbackController {
-        +PlayHitEffect()
-        +PlayMissEffect()
-        +ShowCombo()
-    }
-
-    class HudController {
-        +UpdateScore()
-        +UpdateTimer()
-        +UpdateCombo()
-        +ShowResult()
-    }
-
-    class AudioFeedback {
-        +PlayHitSound()
-        +PlayMissSound()
-        +PlayComboSound()
     }
 
     class TrajectoryPreview {
         +ShowArc()
         +HideArc()
-        +UpdateArc()
     }
 
-    RoundManager --> HoleController : manages spawning
+    class HudController {
+        +UpdateScore()
+        +UpdateTimer()
+        +ShowResult()
+    }
+
+    class FeedbackController {
+        +PlayHitEffect()
+        +PlayMissEffect()
+    }
+
+    class AudioFeedback {
+        +PlayHitSound()
+        +PlayMissSound()
+    }
+
+    RoundManager --> HoleController : drives spawning
     RoundManager --> HudController : updates UI
-    RoundManager --> FeedbackController : triggers effects
-    RoundManager --> AudioFeedback : triggers audio
-    ShotController --> SwipeInput : listens to
+    RoundManager --> FeedbackController : triggers VFX
+    RoundManager --> AudioFeedback : triggers SFX
+    ShotController --> SwipeInput : subscribes to
     ShotController --> ShotSolver : uses
     ShotController --> TrajectoryPreview : drives
     ShotController --> BallController : fires
     MoleHitbox --> RoundManager : reports hit
-    FeedbackController --> AudioFeedback : coordinates
 ```
 
 ---
 
-## 🎮 Game Pipeline
+## Game Loop Pipeline
 
-The complete game loop from player input to result screen:
+Shows the full execution flow from player input through to round resolution.
 
 ```mermaid
 flowchart TD
-    A([🏁 App Start]) --> B[Show Level Select Menu]
-    B --> C{Player Selects Level}
-    C --> D[Show Level Intro Banner]
-    D --> E[Initialize Round\nSpawn holes, reset ball, start timer]
-    E --> F([🎮 PLAYING STATE])
+    A([Application Start]) --> B[Level Select Menu]
+    B --> C[Player selects a level]
+    C --> D[Level intro banner\nlevelIntroDuration = 1.1s]
+    D --> E[RoundManager initialises round\nTimer starts · Spawning begins]
 
-    F --> G[SwipeInput detects touch]
-    G --> H[ShotController: BeginAim]
-    H --> I[ShotSolver: Calculate Trajectory]
-    I --> J[TrajectoryPreview: Show Arc]
-    J --> K{Player Releases?}
-    K -- No, still swiping --> I
-    K -- Yes --> L[BallController: Launch Ball]
-    L --> M{Ball hits Mole?}
+    E --> F[HoleController spawns mole\nafter spawnInterval + jitter]
+    F --> G[Mole rises — emergeDuration 0.25s\nHittable after 60% of rise]
 
-    M -- HIT ✅ --> N[MoleHitbox: Register Hit]
-    N --> O[RoundManager: Award Points\n+ Combo Multiplier]
-    O --> P[FeedbackController: Hit VFX\n+ Score Popup]
-    P --> Q[AudioFeedback: Play Hit SFX\nCrowd Cheer]
-    Q --> R[HudController: Update Score\n+ Combo Display]
-    R --> S[HoleController: Despawn Mole]
+    G --> H[SwipeInput detects touch\nwithin launchAreaRadius]
+    H --> I[ShotController.BeginAim]
+    I --> J[ShotSolver calculates\nlaunch velocity and angle]
+    J --> K[TrajectoryPreview renders arc]
+    K --> L{Player releases finger?}
+    L -- Still aiming --> J
+    L -- Released --> M[BallController.Launch\nRigidbody force applied]
 
-    M -- MISS ❌ --> T[RoundManager: Reset Combo]
-    T --> U[FeedbackController: Miss VFX]
-    U --> V[AudioFeedback: Play Miss SFX]
-    V --> W[HudController: Update Display]
+    M --> N{Collision result}
 
-    S --> X{Timer Expired OR\nGoal Reached?}
-    W --> X
+    N -- MoleHitbox trigger --> O[RoundManager records hit\nCombo incremented · Points awarded]
+    O --> P[FeedbackController\nhit VFX + score popup]
+    P --> Q[AudioFeedback\nhit SFX + crowd cheer]
+    Q --> R[HudController\nupdates score and combo]
+    R --> S[Ball resets after resetDelayAfterHit]
 
-    X -- Continue --> Y[Spawn Next Mole\nIncrease Difficulty]
-    Y --> G
+    N -- No collision / timeout --> T[RoundManager records miss\nCombo reset to 0]
+    T --> U[FeedbackController miss VFX]
+    U --> V[Ball resets after resetDelayAfterMiss]
 
-    X -- Timer Expired ⏰ --> Z[LOSE: Show Time-Up Screen]
-    X -- Goal Reached 🏆 --> AA[WIN: Calculate Stars\n1★ 2★ 3★]
+    S --> W{Round end condition?}
+    V --> W
 
-    Z --> AB{Retry?}
-    AA --> AC{Next Level or Menu?}
-    AB -- Retry --> E
-    AB -- Menu --> B
-    AC -- Next Level --> D
-    AC -- Menu --> B
+    W -- Target hits reached --> X[WIN\nStar rating calculated]
+    W -- Timer expired --> Y[LOSE\nTime-up screen shown]
+    W -- Neither --> F
 
-    style A fill:#1a1a2e,color:#fff
-    style F fill:#16213e,color:#fff,stroke:#e94560,stroke-width:3px
-    style AA fill:#0f3460,color:#fff
-    style Z fill:#533483,color:#fff
-    style M fill:#e94560,color:#fff
-    style K fill:#e94560,color:#fff
-    style X fill:#e94560,color:#fff
+    X --> Z{Player choice}
+    Y --> Z
+    Z -- Retry --> E
+    Z -- Next Level --> D
+    Z -- Menu --> B
 ```
 
 ---
 
-## 🔧 Build Pipeline
+## Build Pipeline
 
-How the project goes from source code to a deployable Android APK:
+Shows how the project moves from source to a signed Android APK.
 
 ```mermaid
 flowchart LR
-    subgraph DEV["🖥️ Development"]
-        A[C# Scripts] --> B[Unity Editor\n6000.5.5f1]
-        C[3D Assets\nFBX / GLB] --> B
-        D[Scenes &\nPrefabs] --> B
-        E[Config Assets\nScriptableObjects] --> B
+    subgraph Source["Source"]
+        S1[C# Scripts]
+        S2[Scene / Prefabs]
+        S3[3D Assets\nFBX · GLB]
+        S4[Config\nScriptableObjects]
     end
 
-    subgraph TEST["🧪 Testing"]
-        B --> F[Editor Unit Tests\nShotSolverTests]
-        B --> G[AutoPlayer\nPlaytest Bot]
-        F --> H{Tests Pass?}
-        G --> H
+    subgraph Editor["Unity Editor"]
+        E1[Asset Import\nglTFast · Texture compression]
+        E2[Script Compilation\nRoslyn]
+        E3[Editor Unit Tests\nShotSolverTests · NUnit]
+        E4[AutoPlayer Playtest\nShot accuracy validation]
     end
 
-    subgraph BUILD["⚙️ Build Process"]
-        H -- ✅ --> I[Unity Build System\nIL2CPP Backend]
-        I --> J[C++ Code Generation\nIL2CPP]
-        J --> K[Gradle Build\nAndroid]
-        K --> L[APK Signing\nRelease Keystore]
+    subgraph Build["Android Build"]
+        B1[IL2CPP\nC++ transpilation]
+        B2[Gradle\nAndroid project generation]
+        B3[APK packaging\nminSdk 26 · ARM64]
+        B4[Release signing]
     end
 
-    subgraph OUTPUT["📦 Output"]
-        L --> M[launcher-release.apk]
-        M --> N[APK/MoleShooting.apk\nRepo Release]
-        M --> O[GitHub Repository\nbhargavm-iiits]
+    subgraph Output["Output"]
+        O1[launcher-release.apk]
+        O2[APK/MoleShooting.apk\ncommitted to repo]
     end
 
-    H -- ❌ --> A
-
-    style DEV fill:#1a1a2e,color:#eee,stroke:#444
-    style TEST fill:#16213e,color:#eee,stroke:#444
-    style BUILD fill:#0f3460,color:#eee,stroke:#444
-    style OUTPUT fill:#533483,color:#eee,stroke:#444
+    Source --> Editor
+    E1 --> E2 --> E3
+    E3 -- pass --> E4
+    E3 -- fail --> S1
+    E4 --> B1 --> B2 --> B3 --> B4 --> O1 --> O2
 ```
 
 ---
 
-## 🚀 Getting Started
+## Configuration Reference
 
-### Prerequisites
+All gameplay parameters are exposed in a single `MoleShotConfig` ScriptableObject at `Assets/MoleShot/Config/`. Key fields:
 
-- **Unity Hub** with Unity **6000.5.5f1** installed
-- **Android Build Support** module (via Unity Hub)
-- **Android SDK & NDK** (bundled with Unity or standalone)
-- **JDK 17** (bundled with Unity)
-- Git
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `gravity` | 34 m/s² | Custom downward gravity applied to `Physics.gravity` and the trajectory preview |
+| `launchAngle` | 28° | Fixed elevation angle for every shot |
+| `maxRange` | 11.5 m | Ground distance reached at a full-length swipe |
+| `minSwipe` | 0.045 | Minimum swipe length as a fraction of screen height |
+| `fullSwipe` | 0.36 | Swipe length that maps to `maxRange` |
+| `maxYaw` | 32° | Maximum horizontal aim angle either side of straight ahead |
+| `shotTimeout` | 3 s | Unresolved shot after this duration counts as a miss |
+| `hitsPerComboStep` | 3 | Consecutive hits per +1 multiplier |
+| `maxMultiplier` | 3 | Multiplier cap |
+| `holeCatchRadius` | 0.6 m | Ground impact within this radius of a hittable mole still counts as a hit |
+| `targetFrameRate` | 60 fps | `Application.targetFrameRate` on Android |
+| `physicsRate` | 60 Hz | `Time.fixedDeltaTime` and trajectory preview step rate |
 
-### Clone & Open
+---
 
-```bash
-# Clone the repository
-git clone https://github.com/bhargavm-iiits/Mole-Shooting-Game.git
+## Scripts Reference
 
-# Open in Unity Hub
-# File → Open Project → Select the cloned folder
+**Runtime**
+
+| File | Responsibility |
+|------|----------------|
+| `RoundManager.cs` | Central state machine — level flow, timer, scoring, combo, mole spawning |
+| `ShotController.cs` | Connects SwipeInput → ShotSolver → TrajectoryPreview → BallController |
+| `ShotSolver.cs` | Computes launch velocity vector for a given target ground position |
+| `BallController.cs` | Rigidbody wrapper — applies launch force, detects out-of-bounds, resets |
+| `SwipeInput.cs` | New Input System adapter — raises `AimStarted`, `AimUpdated`, `Released`, `Cancelled` |
+| `TrajectoryPreview.cs` | Simulates and draws the dotted arc during the aim phase |
+| `HoleController.cs` | Manages a single burrow — mole spawn/despawn animation state machine |
+| `MoleHitbox.cs` | Collider trigger on mole — calls `RoundManager` on a valid hit |
+| `HudController.cs` | In-game UI: score counter, timer bar, combo label, result screen |
+| `FeedbackController.cs` | Hit/miss particle effects, confetti, score popup |
+| `AudioFeedback.cs` | SFX routing for all game events |
+| `CrowdController.cs` | Procedural spectator animation — reacts to hit size |
+| `CrowdCheerSynth.cs` | Synthesised crowd cheer audio |
+| `LevelDefinition.cs` | Serialisable struct — per-level duration, target hits, difficulty ranges |
+| `MoleShotConfig.cs` | Master ScriptableObject — all tunables |
+| `MoleShotProgress.cs` | Persistent save data — best scores and stars per level |
+| `AutoPlayer.cs` | Drives `ShotController` programmatically for automated playtest runs |
+| `SafeAreaFitter.cs` | Adjusts UI RectTransform to the device safe area |
+| `PortraitCameraFitter.cs` | Adjusts camera FOV for varying portrait aspect ratios |
+| `Billboard.cs` | Rotates a transform to always face the camera |
+
+**Editor-only**
+
+| File | Responsibility |
+|------|----------------|
+| `MoleShotBuild.cs` | Menu item — one-click Android APK build |
+| `MoleShotPlaytest.cs` | Runs `AutoPlayer` accuracy tests from the Editor menu |
+| `MoleShotSceneBuilder.cs` | Procedural scene assembly helper |
+| `MoleShotRecorder.cs` | Gameplay capture via `com.unity.recorder` |
+| `ProceduralArt.cs` | Generates sprite/mesh assets used by the Art folder |
+
+---
+
+## Running Tests
+
+The project includes NUnit tests for the trajectory solver. Run from the Unity Editor:
+
+**Window → General → Test Runner → Edit Mode → Run All**
+
+The `ShotSolverTests` suite validates that `ShotSolver` returns the correct launch velocity for a set of known target positions and gravity values.
+
+---
+
+## Installing the APK
+
+A pre-built release APK is included at `APK/MoleShooting.apk`.
+
+```
+Minimum Android version: 8.0 (API level 26)
+Architecture:            ARM64
+Scripting backend:       IL2CPP
 ```
 
-### Build for Android
+Installation steps:
 
-1. Open **File → Build Settings**
-2. Select **Android** as platform → click **Switch Platform**
-3. Set **Scripting Backend** to `IL2CPP`
-4. Enable **Build App Bundle (Google Play)** if targeting Play Store
-5. Click **Build** → choose output path
-6. The APK will be generated in your chosen directory
-
-### Run in Editor
-
-1. Open `Assets/Scenes/SampleScene.unity`
-2. Press ▶ **Play** in the Unity Editor
-3. Use mouse drag to simulate swipe input
+1. Enable **Install unknown apps** for your file manager in Android Settings → Apps.
+2. Transfer `MoleShooting.apk` to the device.
+3. Open the file and tap **Install**.
 
 ---
 
-## 📱 Download & Install
+## Dependencies
 
-A pre-built APK is included in the repository:
-
-```
-APK/MoleShooting.apk
-```
-
-### Installation Steps (Android)
-
-1. Enable **Install from Unknown Sources** in Android Settings → Security
-2. Transfer `MoleShooting.apk` to your device
-3. Tap the APK file to install
-4. Launch **Mole Shot** from your app drawer
-
-> **Requirements:** Android 8.0 (API 26) or higher
-
----
-
-## 📜 Scripts Reference
-
-| Script | Namespace | Role |
-|--------|-----------|------|
-| `RoundManager.cs` | MoleShot | Central game state machine — level flow, scoring, timer, spawning |
-| `ShotController.cs` | MoleShot | Glues SwipeInput → ShotSolver → TrajectoryPreview → BallController |
-| `ShotSolver.cs` | MoleShot | Physics math — calculates launch velocity for a given target |
-| `BallController.cs` | MoleShot | Rigidbody ball — launch, flight, reset |
-| `SwipeInput.cs` | MoleShot | New Input System wrapper — fires AimStarted/Updated/Released events |
-| `TrajectoryPreview.cs` | MoleShot | Renders the dotted arc preview during aiming |
-| `HoleController.cs` | MoleShot | Controls a single burrow — mole spawn/despawn animation |
-| `MoleHitbox.cs` | MoleShot | Collision detection — reports hits back to RoundManager |
-| `HudController.cs` | MoleShot | All in-game UI: score, timer, combo, result screen |
-| `FeedbackController.cs` | MoleShot | Hit/miss VFX, confetti, score popups |
-| `AudioFeedback.cs` | MoleShot | SFX playback for all game events |
-| `CrowdController.cs` | MoleShot | Procedural crowd animation/reactions |
-| `CrowdCheerSynth.cs` | MoleShot | Synthesised crowd cheer audio |
-| `LevelDefinition.cs` | MoleShot | ScriptableObject — defines difficulty, timer, goals per level |
-| `MoleShotConfig.cs` | MoleShot | Global game config (shot power, combo thresholds, etc.) |
-| `AutoPlayer.cs` | MoleShot | AI bot — drives ShotController for automated playtesting |
-| `MoleShotProgress.cs` | MoleShot | Persistent save data — best scores, stars per level |
-| `SafeAreaFitter.cs` | MoleShot | Adjusts UI for notched / punch-hole displays |
-| `PortraitCameraFitter.cs` | MoleShot | Camera FOV adjustment for different portrait aspect ratios |
-| `Billboard.cs` | MoleShot | Makes objects always face the camera |
-| `MoleShotBuild.cs` | MoleShot.Editor | Editor menu — one-click Android build script |
-| `MoleShotPlaytest.cs` | MoleShot.Editor | Editor tool — runs AutoPlayer shot accuracy tests |
-| `MoleShotRecorder.cs` | MoleShot.Recording.Editor | Records gameplay video clips from the Editor |
-| `ShotSolverTests.cs` | MoleShot.Tests | NUnit unit tests for trajectory solver |
-
----
-
-## 🤝 Contributing
-
-This is an academic assignment project. If you'd like to suggest improvements:
-
-1. Fork the repository
-2. Create your feature branch: `git checkout -b feature/my-feature`
-3. Commit your changes: `git commit -m 'Add some feature'`
-4. Push to the branch: `git push origin feature/my-feature`
-5. Open a Pull Request
-
----
-
-## 👨‍💻 Author
-
-**Bhargav M**  
-📧 bhargav.m23@iiits.in  
-🏫 IIIT Sri City  
-🏢 ImmersiWorks Prototype
-
----
-
-## 📄 License
-
-This project is for educational purposes as part of a university assignment at IIIT Sri City.
-
----
-
-<div align="center">
-Made with ❤️ and Unity 6 · © 2026 Bhargav M, IIIT Sri City
-</div>
+| Package | Version |
+|---------|---------|
+| Universal Render Pipeline | 17.5.0 |
+| Input System | 1.19.0 |
+| glTFast | 6.21.0 |
+| Unity Recorder | 5.1.8 |
+| Test Framework | 1.7.0 |
+| Timeline | 1.8.12 |
+| AI Navigation | 2.0.14 |
+| Visual Scripting | 1.9.11 |
